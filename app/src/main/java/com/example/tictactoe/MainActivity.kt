@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     private var firstTurn = Turn.CROSS
     private var currentTurn = Turn.CROSS
-
     private var boardList = mutableListOf<Button>()
 
     private lateinit var binding : ActivityMainBinding
@@ -39,7 +38,41 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun boardTapped(view: View){
+        if(view !is Button)
+            return
+        addToBoard(view)
+    }
 
+    private fun addToBoard(button: Button){
+
+        if(button.text != ""){
+            return
+        }
+        if(currentTurn == Turn.NOUGHT){
+            button.text = NOUGHT
+            currentTurn = Turn.CROSS
+        }
+        else if(currentTurn == Turn.CROSS){
+            button.text = CROSS
+            currentTurn = Turn.NOUGHT
+        }
+
+        setTurnLabel()
+    }
+
+    private fun setTurnLabel(){
+        var turnText = ""
+        if(currentTurn == Turn.CROSS)
+            turnText = "Turn $CROSS"
+        else if(currentTurn == Turn.NOUGHT)
+            turnText = "Turn $NOUGHT"
+
+        binding.turnTV.text = turnText
+    }
+
+    companion object{
+        const val NOUGHT = "0"
+        const val CROSS = "X"
     }
 
 
